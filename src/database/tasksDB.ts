@@ -1,6 +1,8 @@
 import { AceBaseServer } from 'acebase-server'
 import dotenv from 'dotenv'
 
+import { schema } from '../schema'
+
 dotenv.config()
 
 const dbname = process.env.DB_NAME
@@ -17,9 +19,10 @@ const server = new AceBaseServer(String(dbname), {
 })
 
 export async function connectDB() {
-  server.on('ready', () => {
+  server.on('ready', async () => {
+    await server.db.schema.set('users/$id', schema)
     console.log('Connected database')
   })
 }
 
-export const tasksDB = server.db.query('tasks')
+export const tasksDB = server.db
