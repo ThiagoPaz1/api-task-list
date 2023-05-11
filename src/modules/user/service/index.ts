@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs'
 
 import { userRepository } from '../repository'
-import { CreateUserDto } from '../../../dto'
+import { CreateUserDto, GetUserDto} from '../../../dto'
 
 class UserService {
   public async create(param: CreateUserDto): Promise<void> {
@@ -16,7 +16,7 @@ class UserService {
     return await userRepository.create(userData)
   }
 
-  public async getUserByEmail(email: string) {
+  public async getUserByEmail(email: string): Promise<GetUserDto> {
     const user = await userRepository.getByEmail(email)
   
     return user

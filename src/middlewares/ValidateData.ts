@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
+import bcryptjs from 'bcryptjs'
+
+import { userService } from '../modules/user/service'
 
 class ValidateData {
   public body(
@@ -24,6 +27,25 @@ class ValidateData {
 
     if (invalidDataFound) {
       return res.status(400).json({ message: 'Fill in all fields' })
+    }
+
+    next()
+  }
+
+  public async loginData(
+    req: Request,
+    res: Response,
+    next: NextFunction): Promise<Response | void> {
+    const { email, password } = req.body
+    const user = await userService.getUserByEmail(email)
+    const passwordCheck = bcryptjs.compareSync(password, user.password)
+    
+    if (!passwordCheck) {
+      return res.status(401).json({message: 'Invalid e-mail or password'})
+    }
+
+    if (user.email !== email) {
+      return res.status(401).json({message: 'Invalid e-mail or password'})
     }
 
     next()
