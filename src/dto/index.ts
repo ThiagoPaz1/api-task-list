@@ -1,5 +1,6 @@
-import { CreateUserDto } from "./user.dto"
+import { CreateUserDto, GetUserDto } from "./user.dto"
 
 export {
-  CreateUserDto
+  CreateUserDto,
+  GetUserDto
 }

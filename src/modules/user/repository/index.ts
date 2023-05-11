@@ -1,5 +1,5 @@
 import { tasksDB } from '../../../database/tasksDB'
-import { CreateUserDto } from '../../../dto'
+import { CreateUserDto, GetUserDto } from '../../../dto'
 
 
 class UserRepository {
@@ -9,6 +9,18 @@ class UserRepository {
       email: param.email,
       password: param.password
     })
+  }
+
+  public async getByEmail(email: string): Promise<GetUserDto> {
+    const user =
+      await tasksDB
+        .ref('users')
+        .query()
+        .filter('email', '==', email)
+        .take(1)
+        .get()
+
+    return user.getValues()[0]
   }
 }
 

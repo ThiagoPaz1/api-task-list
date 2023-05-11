@@ -15,6 +15,12 @@ class UserService {
 
     return await userRepository.create(userData)
   }
+
+  public async getUserByEmail(email: string) {
+    const user = await userRepository.getByEmail(email)
+  
+    return user
+  }
 }
 
 export const userService = new UserService()

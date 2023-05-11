@@ -18,6 +18,17 @@ class UserController {
       return res.status(500).json(error)
     }
   }
+
+  public async singIn(req: Request, res: Response): Promise<Response> {
+    const { email } = req.body
+
+    try {
+      const user = await userService.getUserByEmail(email)
+      return res.json(user)
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  }
 }
 
 export const userController = new UserController()
