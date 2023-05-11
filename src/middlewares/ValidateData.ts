@@ -37,8 +37,8 @@ class ValidateData {
     res: Response,
     next: NextFunction): Promise<Response | void> {
     const { email, password } = req.body
-    const user = await userService.getUserByEmail(email)
-    const passwordCheck = bcryptjs.compareSync(password, user.password)
+    const { user } = await userService.getUserByEmail(email)
+    const passwordCheck = (password && user.password) && bcryptjs.compareSync(password, user.password)
     
     if (!passwordCheck) {
       return res.status(401).json({message: 'Invalid e-mail or password'})

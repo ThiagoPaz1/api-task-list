@@ -1,4 +1,8 @@
 import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 import { userRepository } from '../repository'
 import { CreateUserDto, GetUserDto} from '../../../dto'
@@ -16,10 +20,11 @@ class UserService {
     return await userRepository.create(userData)
   }
 
-  public async getUserByEmail(email: string): Promise<GetUserDto> {
+  public async getUserByEmail(email: string): Promise<{user: GetUserDto, token: string}> {
     const user = await userRepository.getByEmail(email)
-  
-    return user
+    const token = jwt.sign({email}, String(process.env.JWT_SECRET), {expiresIn: '24h'})
+
+    return { user, token }
   }
 }
 
