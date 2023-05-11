@@ -13,14 +13,15 @@ class ValidateData {
 
     if (data.length) {
       for (let i of data) {
-        if (!i) invalidDataFound = true
+        if (!i || String(i).length < 2) invalidDataFound = true
       }
     } else {
       invalidDataFound = true
     }
 
     if (invalidDataFound) {
-      return res.status(400).json({ message: 'Fill in all fields' })
+      const msg = 'All fields are mandatory and must be at least 2 characters long'
+      return res.status(400).json({ message: msg })
     }
 
     next()

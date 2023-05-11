@@ -1,11 +1,13 @@
 import { tasksDB } from '../../../database/tasksDB'
+import { CreateTaskDto } from '../../../dto/task.dto'
+
 
 class TaskRepository {
-  public async create(): Promise<void> {
-    await tasksDB.ref('tasks').push({
-      title: 'Academia',
-      description: 'Tirar um tempo para academia.',
-      created_at: new Date()
+  public async create(param: CreateTaskDto): Promise<void> {
+    const path = `users/${param.userId}/$taskId`
+    await tasksDB.ref(path).push({
+      title: param.title,
+      description: param.description
     })
   }
  
