@@ -1,14 +1,15 @@
 import { tasksDB } from '../../../database/tasksDB'
 import { CreateUserDto, GetUserDto } from '../../../dto'
 
-
 class UserRepository {
-  public async create(param: CreateUserDto) {
-    await tasksDB.ref('users').push({
+  public async create(param: CreateUserDto): Promise<void> {
+    const newUser = await tasksDB.ref('users').push({
       name: param.name,
       email: param.email,
       password: param.password
     })
+
+    console.log("CHAVE =>>>>", newUser.key)
   }
 
   public async getByEmail(email: string): Promise<GetUserDto> {

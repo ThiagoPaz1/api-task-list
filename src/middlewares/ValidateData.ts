@@ -8,14 +8,8 @@ class ValidateData {
     req: Request,
     res: Response,
     next: NextFunction): Response | void {
-    const { email } = req.body
     const data = Object.values(req.body)
-    const validateEmail = /\S+@\S+\.\S+/
     let invalidDataFound: boolean = false
-
-    if (!validateEmail.test(email)) {
-      return res.status(400).json({ message: 'Invalid email' })
-    }
 
     if (data.length) {
       for (let i of data) {
@@ -31,6 +25,29 @@ class ValidateData {
 
     next()
   }
+
+  public async newUserData(
+    req: Request,
+    res: Response,
+    next: NextFunction): Promise<Response | void> {
+      const { email, password } = req.body
+      const { user } = await userService.getUserByEmail(email)
+      const validateEmail = /\S+@\S+\.\S+/
+
+      if (user?.email) {
+        return res.status(400).json({ message: 'E-mail already registered' })
+      }
+
+      if (!validateEmail.test(email)) {
+        return res.status(400).json({ message: 'Invalid email' })
+      }
+  
+      if (!password || password.length < 6) {
+        return res.status(400).json({ message: 'Password requires at least six characters' })
+      }
+
+      next()
+    }
 
   public async loginData(
     req: Request,
