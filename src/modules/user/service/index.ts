@@ -20,9 +20,19 @@ class UserService {
     return await userRepository.create(userData)
   }
 
-  public async getUserByEmail(email: string): Promise<{user: GetUserDto, token: string}> {
+  public async getUserByEmail(email: string): Promise<{user: GetUserDto }> {
     const user = await userRepository.getByEmail(email)
-    const token = jwt.sign({email}, String(process.env.JWT_SECRET), {expiresIn: '24h'})
+    return { user }
+  }
+
+  public async singIn(email: string): Promise<{user: GetUserDto, token: string}> {
+    const userData = await userRepository.getByEmail(email)
+    const token = jwt.sign({id: userData.id}, String(process.env.JWT_SECRET), {expiresIn: '24h'})
+    const user = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email
+    }
 
     return { user, token }
   }

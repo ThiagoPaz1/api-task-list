@@ -23,7 +23,7 @@ class UserController {
     const { email } = req.body
 
     try {
-      const user = await userService.getUserByEmail(email)
+      const user = await userService.singIn(email)
       return res.json(user)
     } catch (error) {
       return res.status(500).json(error)
