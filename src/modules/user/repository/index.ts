@@ -9,7 +9,9 @@ class UserRepository {
       password: param.password
     })
 
-    console.log("CHAVE =>>>>", newUser.key)
+   await tasksDB.ref(`users/${newUser.key}`).update({
+      id: String(newUser.key)
+    })
   }
 
   public async getByEmail(email: string): Promise<GetUserDto> {

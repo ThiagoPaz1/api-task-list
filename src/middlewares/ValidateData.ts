@@ -4,7 +4,7 @@ import bcryptjs from 'bcryptjs'
 import { userService } from '../modules/user/service'
 
 class ValidateData {
-  public body(
+  public newTaskData(
     req: Request,
     res: Response,
     next: NextFunction): Response | void {
@@ -30,9 +30,13 @@ class ValidateData {
     req: Request,
     res: Response,
     next: NextFunction): Promise<Response | void> {
-      const { email, password } = req.body
+      const { email, password, name } = req.body
       const { user } = await userService.getUserByEmail(email)
       const validateEmail = /\S+@\S+\.\S+/
+
+      if (!name || name.length < 2) {
+        return res.status(400).json({ message: 'Name requires at least 2 characters' })
+      }
 
       if (user?.email) {
         return res.status(400).json({ message: 'E-mail already registered' })
@@ -43,7 +47,7 @@ class ValidateData {
       }
   
       if (!password || password.length < 6) {
-        return res.status(400).json({ message: 'Password requires at least six characters' })
+        return res.status(400).json({ message: 'Password requires at least 6 characters' })
       }
 
       next()
