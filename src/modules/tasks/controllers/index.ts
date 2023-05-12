@@ -21,6 +21,20 @@ class TaskController {
       return res.status(500).json(error)
     }
   }
+
+  public async getAllTasks(req: RequestData, res: Response): Promise<Response> {
+    const page = Number(req.query?.page)
+    const pageSize = Number(req.query?.pageSize)
+    const userId = String(req.userId)
+
+    try {
+      const tasks = await taskService.getAllTasksWithPagination(userId, page, pageSize)
+
+      return res.json(tasks)
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  } 
 }
 
 export const taskController = new TaskController()
