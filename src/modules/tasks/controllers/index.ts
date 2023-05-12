@@ -48,6 +48,20 @@ class TaskController {
       return res.status(500).json(error)
     }
   }
+
+  public async taskUpdate(req: RequestData, res: Response): Promise<Response> {
+    const { id } = req.params
+    const title = req.body.title as string
+    const description = req.body.description as string
+    const userId = req.userId as string
+
+    try {
+      const updatedTask = await taskService.taskUpdate(userId, { id, title, description })
+      return res.json(updatedTask)
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  }
 } 
 
 export const taskController = new TaskController()

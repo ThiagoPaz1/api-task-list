@@ -49,6 +49,8 @@ class TaskService {
 
   public async taskUpdate(userId: string, data: UpdateTaskDto): Promise<GetTaskDto> {
     const updatedTask = await taskRepository.update(userId, data)
+    
+    return updatedTask
   }
 }
 
