@@ -1,5 +1,5 @@
 import { tasksDB } from '../../../database/tasksDB'
-import { CreateTaskDto } from '../../../dto/task.dto'
+import { CreateTaskDto, GetTaskDto } from '../../../dto/task.dto'
 
 
 class TaskRepository {
@@ -15,10 +15,22 @@ class TaskRepository {
       id: newTask.key
     })
   }
- 
-  public async getAll() {
-    const tasks = await tasksDB.ref('tasks').get()
-    return await tasks.val()
+
+  public async getAllWithPagination(
+    userId: string,
+    page: number,
+    pageSize: number): Promise<{tasks: GetTaskDto[], tasksTotal: number}> {
+    const path = `users/${userId}/tasks`
+    const { query } = tasksDB.ref(path)
+    const skipSize = page * pageSize
+    const tasksTotal = await query().count()
+    const { getValues } = await query()
+      .skip(skipSize)
+      .take(pageSize)
+      .get()
+
+    
+    return { tasks: getValues(), tasksTotal: tasksTotal }
   }
 }
 

@@ -7,7 +7,7 @@ import { RequestData } from '../@types'
 
 dotenv.config()
 
-import { userService } from '../modules/user/service'
+import { userService } from '../modules/user/services'
 
 class ValidateData {
   public async verirfyAuthentication(

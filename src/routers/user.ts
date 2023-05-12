@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { userController } from '../modules/user/controller'
+import { userController } from '../modules/user/controllers'
 import { validateData } from '../middlewares/ValidateData'
 
 const route = Router()
