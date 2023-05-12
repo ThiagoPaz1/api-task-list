@@ -122,6 +122,11 @@ class TaskRepository {
 
     return task
   }
+
+  public async delete(userId: string, id: string): Promise<void> {
+    const path = `users/${userId}/tasks/${id}`
+    await tasksDB.ref(path).remove()
+  }
 }
 
 export const taskRepository = new TaskRepository()

@@ -52,7 +52,7 @@ class ValidateData {
     next()
   }
 
-  public async id(
+  public async verifyId(
     req: RequestData,
     res: Response,
     next: NextFunction

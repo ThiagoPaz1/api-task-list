@@ -54,7 +54,7 @@ class TaskService {
   }
 
   public async getById(userId: string, id: string): Promise<GetTaskDto> {
-    const task = await taskService.getById(userId, id)
+    const task = await taskRepository.getById(userId, id)
 
     return task
   }
