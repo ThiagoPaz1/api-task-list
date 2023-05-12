@@ -1,7 +1,7 @@
 import { AceBaseServer } from 'acebase-server'
 import dotenv from 'dotenv'
 
-import { schema } from '../schema'
+import { userSchema, taskSchema } from '../schemas'
 
 dotenv.config()
 
@@ -20,7 +20,8 @@ const server = new AceBaseServer(String(dbname), {
 
 export async function connectDB() {
   server.on('ready', async () => {
-    await server.db.schema.set('users/$id', schema)
+    await server.db.schema.set('users/$userid', userSchema)
+    await server.db.schema.set('users/$userid/tasks/$taskid', taskSchema)
     console.log('Connected database')
   })
 }

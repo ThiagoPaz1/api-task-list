@@ -1,10 +1,12 @@
 import { Request, Response } from 'express'
 
 import { taskService } from '../services'
+import { RequestData } from '../../../@types'
 
 class TaskController {
-  public async newTask(req: Request, res: Response): Promise<Response> {
-    const { title, description, userId } = req.body
+  public async newTask(req: RequestData, res: Response): Promise<Response> {
+    const { title, description } = req.body
+    const userId = req.userId as string
 
     try {
       const taskData = {

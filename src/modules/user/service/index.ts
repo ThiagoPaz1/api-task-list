@@ -27,7 +27,7 @@ class UserService {
 
   public async singIn(email: string): Promise<{user: GetUserDto, token: string}> {
     const userData = await userRepository.getByEmail(email)
-    const token = jwt.sign({id: userData.id}, String(process.env.JWT_SECRET), {expiresIn: '24h'})
+    const token = jwt.sign({id: userData.id}, String(process.env.JWT_SECRET), {expiresIn: '1h'})
     const user = {
       id: userData.id,
       name: userData.name,

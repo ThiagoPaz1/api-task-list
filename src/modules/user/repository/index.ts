@@ -10,7 +10,7 @@ class UserRepository {
     })
 
    await tasksDB.ref(`users/${newUser.key}`).update({
-      id: String(newUser.key)
+      id: newUser.key
     })
   }
 
