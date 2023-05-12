@@ -19,18 +19,23 @@ class TaskRepository {
   public async getAllWithPagination(
     userId: string,
     page: number,
-    pageSize: number): Promise<{tasks: GetTaskDto[], tasksTotal: number}> {
-    const path = `users/${userId}/tasks`
-    const { query } = tasksDB.ref(path)
+    pageSize: number): Promise<{ tasks: GetTaskDto[], tasksTotal: number }> {
     const skipSize = page * pageSize
-    const tasksTotal = await query().count()
-    const { getValues } = await query()
+    const tasksTotal = await tasksDB
+      .ref(`users/${userId}/tasks`)
+      .query()
+      .count()
+
+    const tasks = await tasksDB
+      .ref(`users/${userId}/tasks`)
+      .query()
       .skip(skipSize)
       .take(pageSize)
       .get()
 
-    
-    return { tasks: getValues(), tasksTotal: tasksTotal }
+    const allTasksData = tasks.getValues()
+
+    return { tasksTotal: tasksTotal, tasks: allTasksData }
   }
 }
 

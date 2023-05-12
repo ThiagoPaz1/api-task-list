@@ -8,5 +8,5 @@ export type GetTaskDto = {
   id: string
   title: string,
   description: string,
-  created_at: Date,
+  created_at: string,
 }

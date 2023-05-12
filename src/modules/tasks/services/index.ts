@@ -1,5 +1,5 @@
 import { taskRepository } from '../repository'
-import { CreateTaskDto, GetTaskDto } from '../../../dto' 
+import { CreateTaskDto, GetTaskDto } from '../../../dto'
 
 
 class TaskService {
@@ -10,11 +10,11 @@ class TaskService {
   public async getAllTasksWithPagination(
     userId: string,
     page: number,
-    pageSize: number): Promise<{tasks: GetTaskDto[], tasksTotal: number}> {
+    pageSize: number): Promise<{ tasks: GetTaskDto[], tasksTotal: number }> {
     const pageData = !page ? 0 : page
     const pageSizeData = !pageSize ? 10 : pageSize
     const allTasks = await taskRepository.getAllWithPagination(userId, pageData, pageSizeData)
-    
+
     return allTasks
   }
 }
