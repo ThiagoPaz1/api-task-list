@@ -1,5 +1,5 @@
 import { tasksDB } from '../../../database/tasksDB'
-import { CreateTaskDto, GetTaskDto } from '../../../dto/task.dto'
+import { CreateTaskDto, GetTaskDto, UpdateTaskDto } from '../../../dto'
 import { dateFormat } from '../../../utils/dateFormat'
 
 class TaskRepository {
@@ -92,6 +92,17 @@ class TaskRepository {
     }
 
     return filteredTasks
+  }
+
+  public async update(userId: string, data: UpdateTaskDto) {
+    const path = `users/${userId}/tasks/${data.id}`
+    const taskData = await tasksDB.ref(path).get()
+    const task = taskData.val() as GetTaskDto
+     
+    await tasksDB.ref(path).update({
+      title: data.title ? data.title : task.title,
+      description: data.description ? data.description : task.description
+    })
   }
 }
 

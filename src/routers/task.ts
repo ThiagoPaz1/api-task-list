@@ -9,6 +9,11 @@ route.use('/', validateData.verirfyAuthentication)
 
 route.get('/filter', taskController.filterTasks)
 route.get('/getAll', taskController.getAllTasks)
+
 route.post('/',validateData.newTaskData, taskController.newTask)
+
+route.put('/:id')
+
+route.delete('/:delete')
 
 export const taskRoute = route
