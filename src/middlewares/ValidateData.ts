@@ -8,6 +8,7 @@ import { RequestData } from '../@types'
 dotenv.config()
 
 import { userService } from '../modules/user/services'
+import { taskService } from '../modules/tasks/services'
 
 class ValidateData {
   public async verirfyAuthentication(
@@ -55,12 +56,16 @@ class ValidateData {
     req: RequestData,
     res: Response,
     next: NextFunction
-  ): Promise<Response> {
+  ): Promise<Response | void> {
     const { id } = req.params
+    const userId = req.userId as string
+    const findTask = await taskService.getById(userId, id)
 
-    if (!id) {
+    if (!id || !findTask) {
       return res.status(404).json({message: 'Id not found'})
     }
+
+    next()
   }
 
   public async newUserData(
