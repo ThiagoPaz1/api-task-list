@@ -34,6 +34,12 @@ class TaskService {
 
     return allTasks
   }
+
+  public async filterTasks(userId: string, title: string, date: string): Promise<GetTaskDto[]> {
+    const tasks = await taskRepository.filter(userId, title, date)
+    
+    return tasks
+  }
 }
 
 export const taskService = new TaskService()
