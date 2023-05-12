@@ -68,16 +68,15 @@ class TaskRepository {
       .ref(`users/${userId}/tasks`)
       .query()
       .get()
+      const tasks: GetTaskDto[] = [...tasksData.getValues()] as GetTaskDto[]
+      
+      if (title && !date) {
+        filteredTasks = tasks.filter((el, i) => tasks[i].title.toLowerCase().includes(title))
 
-    const tasks: GetTaskDto[] = tasksData.getValues() as GetTaskDto[]
-
-    if (title && !date) {
-      filteredTasks = tasks.filter((_el, i) => tasks[i].title.includes(title))
-
-      return filteredTasks
+        return filteredTasks
     }
 
-    if (!title && date) {
+    if (!title?.length && date?.length) {
       filteredTasks = tasks.filter(i => dateFormat(i.created_at) === date)
 
       return filteredTasks
@@ -86,7 +85,7 @@ class TaskRepository {
     if (title && date) {
       filteredTasks =
         tasks
-          .filter((_el, i) => tasks[i].title.includes(title))
+          .filter((_el, i) => tasks[i].title.toLowerCase().includes(title))
           .filter(i => dateFormat(i.created_at) === date)
 
       return filteredTasks

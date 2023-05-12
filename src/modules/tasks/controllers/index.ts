@@ -6,7 +6,7 @@ import { RequestData } from '../../../@types'
 class TaskController {
   public async newTask(req: RequestData, res: Response): Promise<Response> {
     const { title, description } = req.body
-    const userId = req.userId as string
+    const userId = String(req.userId)
 
     try {
       const taskData = {
@@ -34,7 +34,20 @@ class TaskController {
     } catch (error) {
       return res.status(500).json(error)
     }
-  } 
-}
+  }
+  
+  public async filterTasks(req: RequestData, res: Response): Promise<Response> {
+    const title =req.query?.title as string
+    const date = req.query?.date as string
+    const userId = String(req.userId)
+
+    try {
+      const tasks = await taskService.filterTasks(userId, title, date)
+      return res.json(tasks) 
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  }
+} 
 
 export const taskController = new TaskController()

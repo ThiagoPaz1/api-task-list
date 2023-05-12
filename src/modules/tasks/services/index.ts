@@ -36,8 +36,14 @@ class TaskService {
   }
 
   public async filterTasks(userId: string, title: string, date: string): Promise<GetTaskDto[]> {
-    const tasks = await taskRepository.filter(userId, title, date)
-    
+    const tasksData: GetTaskDto[] = await taskRepository.filter(userId, title, date)
+    const tasks: GetTaskDto[] = tasksData.map(i => ({
+      id: i.id,
+      title: i.title,
+      description: i.description,
+      created_at: dateFormat(i.created_at)
+    }))
+
     return tasks
   }
 }
