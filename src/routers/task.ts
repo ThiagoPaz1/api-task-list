@@ -14,6 +14,6 @@ route.post('/', validateData.newTaskData, taskController.newTask)
 
 route.put('/:id', validateData.verifyId, taskController.taskUpdate)
 
-route.delete('/:id', validateData.verifyId)
+route.delete('/:id', validateData.verifyId, taskController.deleteTask)
 
 export const taskRoute = route
