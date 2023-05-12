@@ -1,5 +1,5 @@
 import { taskRepository } from '../repository'
-import { CreateTaskDto, GetTaskDto } from '../../../dto'
+import { CreateTaskDto, GetTaskDto, UpdateTaskDto } from '../../../dto'
 
 import { dateFormat } from '../../../utils/dateFormat'
 
@@ -45,6 +45,10 @@ class TaskService {
     }))
 
     return tasks
+  }
+
+  public async taskUpdate(userId: string, data: UpdateTaskDto): Promise<GetTaskDto> {
+    const updatedTask = await taskRepository.update(userId, data)
   }
 }
 

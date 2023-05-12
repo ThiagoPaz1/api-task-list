@@ -94,7 +94,7 @@ class TaskRepository {
     return filteredTasks
   }
 
-  public async update(userId: string, data: UpdateTaskDto) {
+  public async update(userId: string, data: UpdateTaskDto): Promise<GetTaskDto> {
     const path = `users/${userId}/tasks/${data.id}`
     const taskData = await tasksDB.ref(path).get()
     const task = taskData.val() as GetTaskDto
@@ -103,6 +103,16 @@ class TaskRepository {
       title: data.title ? data.title : task.title,
       description: data.description ? data.description : task.description
     })
+
+    const updatedTaskData = await tasksDB.ref(path).get()
+    const updatedTask = updatedTaskData.val() as GetTaskDto
+  
+    return {
+      id: updatedTask.id,
+      title: updatedTask.title,
+      description: updatedTask.description,
+      created_at: updatedTask.created_at
+    }
   }
 }
 
