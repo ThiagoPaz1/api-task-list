@@ -51,6 +51,18 @@ class ValidateData {
     next()
   }
 
+  public async id(
+    req: RequestData,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const { id } = req.params
+
+    if (!id) {
+      return res.status(404).json({message: 'Id not found'})
+    }
+  }
+
   public async newUserData(
     req: Request,
     res: Response,

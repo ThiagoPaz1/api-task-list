@@ -114,6 +114,14 @@ class TaskRepository {
       created_at: updatedTask.created_at
     }
   }
+
+  public async getById(userId: string, id: string): Promise<GetTaskDto> {
+    const path = `users/${userId}/tasks/${id}`
+    const taskData = await tasksDB.ref(path).get()
+    const task = taskData.val() as GetTaskDto
+
+    return task
+  }
 }
 
 export const taskRepository = new TaskRepository()
