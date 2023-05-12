@@ -1,6 +1,10 @@
 import { CreateUserDto, GetUserDto } from "./user.dto"
+import { CreateTaskDto, GetTaskDto, UpdateTaskDto } from "./task.dto"
 
 export {
   CreateUserDto,
-  GetUserDto
+  GetUserDto,
+  CreateTaskDto,
+  GetTaskDto,
+  UpdateTaskDto
 }
