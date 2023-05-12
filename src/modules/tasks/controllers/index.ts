@@ -62,6 +62,18 @@ class TaskController {
       return res.status(500).json(error)
     }
   }
+
+  public async deleteTask(req: RequestData, res: Response): Promise<Response> {
+    const { id } = req.params
+    const userId = req.userId as string
+
+    try {
+      await taskService.deleteTask(userId, id)
+      return res.json({message: 'Successfully delete task'})
+    } catch (error) {
+      return res.status(500).json(error)      
+    }
+  }
 } 
 
 export const taskController = new TaskController()

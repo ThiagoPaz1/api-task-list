@@ -58,6 +58,10 @@ class TaskService {
 
     return task
   }
+
+  public async deleteTask(userId: string, id: string): Promise<void> {
+    await taskRepository.delete(userId, id)
+  }
 }
 
 export const taskService = new TaskService()
