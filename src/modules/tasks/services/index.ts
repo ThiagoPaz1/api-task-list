@@ -4,8 +4,10 @@ import { CreateTaskDto, GetTaskDto, UpdateTaskDto } from '../../../dto'
 import { dateFormat } from '../../../utils/dateFormat'
 
 class TaskService {
-  public async create(param: CreateTaskDto): Promise<void> {
-    await taskRepository.create(param)
+  public async getById(userId: string, id: string): Promise<GetTaskDto> {
+    const task = await taskRepository.getById(userId, id)
+
+    return task
   }
 
   public async getAllTasksWithPagination(
@@ -47,16 +49,14 @@ class TaskService {
     return tasks
   }
 
+  public async create(param: CreateTaskDto): Promise<void> {
+    await taskRepository.create(param)
+  }
+
   public async taskUpdate(userId: string, data: UpdateTaskDto): Promise<GetTaskDto> {
     const updatedTask = await taskRepository.update(userId, data)
 
     return updatedTask
-  }
-
-  public async getById(userId: string, id: string): Promise<GetTaskDto> {
-    const task = await taskRepository.getById(userId, id)
-
-    return task
   }
 
   public async deleteTask(userId: string, id: string): Promise<void> {

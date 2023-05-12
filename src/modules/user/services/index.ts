@@ -8,6 +8,11 @@ import { userRepository } from '../repository'
 import { CreateUserDto, GetUserDto} from '../../../dto'
 
 class UserService {
+  public async getUserByEmail(email: string): Promise<{user: GetUserDto }> {
+    const user = await userRepository.getByEmail(email)
+    return { user }
+  }
+
   public async create(param: CreateUserDto): Promise<void> {
     const salt = bcryptjs.genSaltSync(10);
     const hash = bcryptjs.hashSync(param.password, salt);
@@ -18,11 +23,6 @@ class UserService {
     }
 
     return await userRepository.create(userData)
-  }
-
-  public async getUserByEmail(email: string): Promise<{user: GetUserDto }> {
-    const user = await userRepository.getByEmail(email)
-    return { user }
   }
 
   public async singIn(email: string): Promise<{user: GetUserDto, token: string}> {
