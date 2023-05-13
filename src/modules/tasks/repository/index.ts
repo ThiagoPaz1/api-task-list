@@ -72,7 +72,7 @@ class TaskRepository {
     }
 
     if (!title?.length && date?.length) {
-      filteredTasks = tasks.filter(i => dateFormat(i.created_at) === date)
+      filteredTasks = tasks.filter(i => dateFormat(i.created_at) === dateFormat(i.created_at))
 
       return filteredTasks
     }
@@ -81,7 +81,7 @@ class TaskRepository {
       filteredTasks =
         tasks
           .filter((_el, i) => tasks[i].title.toLowerCase().includes(title))
-          .filter(i => dateFormat(i.created_at) === date)
+          .filter(i => dateFormat(i.created_at) === dateFormat(i.created_at))
 
       return filteredTasks
     }
