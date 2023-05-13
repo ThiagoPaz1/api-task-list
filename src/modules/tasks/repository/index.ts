@@ -37,6 +37,10 @@ class TaskRepository {
       const pagesStr = String(pages)
       const index = pagesStr.indexOf('.')
 
+      if (tasksTotal <= 0) {
+        return 0
+      }
+
       if (pages < 1) {
         return 1
       }
