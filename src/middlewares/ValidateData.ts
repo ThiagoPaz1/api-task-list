@@ -19,10 +19,10 @@ class ValidateData {
     const SECRET = String(process.env.JWT_SECRET)
 
     jwt.verify(String(token), SECRET, (err, decoded) => {
-      if (err) return res.status(401).json({message: 'User is not authenticated'})
-      
+      if (err) return res.status(401).json({ message: 'User is not authenticated' })
+
       const payload: JwtPayload = decoded as JwtPayload
-      
+
       req.userId = payload.id
     })
 
@@ -48,7 +48,24 @@ class ValidateData {
       const msg = 'All fields are mandatory and must be at least 2 characters long'
       return res.status(400).json({ message: msg })
     }
-    
+
+    next()
+  }
+
+  public async updateTaskData(
+    req: RequestData,
+    res: Response,
+    next: NextFunction): Promise<Response | void> {
+    const { title, description } = req.body
+
+    if (title && title?.length < 2) {
+      return res.status(400).json({message: 'The field must be at least two characters long'})
+    }
+
+    if (description && description?.length < 2) {
+      return res.status(400).json({message: 'The field must be at least two characters long'})
+    }
+
     next()
   }
 
@@ -62,7 +79,7 @@ class ValidateData {
     const findTask = await taskService.getById(userId, id)
 
     if (!id || !findTask) {
-      return res.status(404).json({message: 'Id not found'})
+      return res.status(404).json({ message: 'Id not found' })
     }
 
     next()

@@ -12,7 +12,7 @@ route.get('/getAll', taskController.getAllTasks)
 
 route.post('/', validateData.newTaskData, taskController.newTask)
 
-route.put('/:id', validateData.verifyId, taskController.taskUpdate)
+route.put('/:id', validateData.verifyId, validateData.updateTaskData, taskController.taskUpdate)
 
 route.delete('/:id', validateData.verifyId, taskController.deleteTask)
 
