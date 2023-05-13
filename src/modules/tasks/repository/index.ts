@@ -119,7 +119,7 @@ class TaskRepository {
       id: updatedTask.id,
       title: updatedTask.title,
       description: updatedTask.description,
-      created_at: updatedTask.created_at
+      created_at: dateFormat(updatedTask.created_at)
     }
   }
 
