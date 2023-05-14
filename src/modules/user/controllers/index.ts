@@ -27,9 +27,9 @@ class UserController {
     
     try {
       const { user } = await userService.getUserByEmail(email)
-      delete user.password
-
-      return res.json(user)
+      const emailData = user?.email
+      
+      return res.json(emailData)
     } catch (error) {  
       return res.status(500).json(error)
     }
