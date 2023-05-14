@@ -26,8 +26,10 @@ class UserController {
     const { email } = req.params
     
     try {
-      const findUser = await userService.getUserByEmail(email)
-      return res.status(404).json(findUser)
+      const { user } = await userService.getUserByEmail(email)
+      delete user.password
+
+      return res.json(user)
     } catch (error) {  
       return res.status(500).json(error)
     }
@@ -37,7 +39,8 @@ class UserController {
     const { email } = req.body
 
     try {
-      const user = await userService.singIn(email)
+      const { user } = await userService.singIn(email)
+
       return res.json(user)
     } catch (error) {
       return res.status(500).json(error)

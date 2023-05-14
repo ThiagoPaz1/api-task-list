@@ -91,10 +91,11 @@ class ValidateData {
     next: NextFunction
   ): Promise<Response | void> {
     const { email } = req.params
-    const findUser = await userService.getUserByEmail(email)
-
-    if (findUser) {
-      return res.status(404).json(findUser)
+    const { user } = await userService.getUserByEmail(email)
+    delete user?.password
+    
+    if (!user) {
+      return res.status(404).json(user)
     }
 
     next()
