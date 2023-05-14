@@ -121,11 +121,11 @@ class ValidateData {
     const passwordCheck = (password && user?.password) && bcryptjs.compareSync(password, user.password)
 
     if (!passwordCheck) {
-      return res.status(401).json({ message: 'Invalid e-mail or password' })
+      return res.status(400).json({ message: 'Invalid e-mail or password' })
     }
 
     if (user.email !== email) {
-      return res.status(401).json({ message: 'Invalid e-mail or password' })
+      return res.status(400).json({ message: 'Invalid e-mail or password' })
     }
 
     next()
