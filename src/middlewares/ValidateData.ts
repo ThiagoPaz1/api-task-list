@@ -85,6 +85,21 @@ class ValidateData {
     next()
   }
 
+  public async verifyEmail(
+    req: RequestData,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    const { email } = req.params
+    const findUser = await userService.getUserByEmail(email)
+
+    if (findUser) {
+      return res.status(404).json(findUser)
+    }
+
+    next()
+  }
+
   public async newUserData(
     req: Request,
     res: Response,
