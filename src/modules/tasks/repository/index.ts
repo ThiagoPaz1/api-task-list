@@ -37,8 +37,12 @@ class TaskRepository {
       const pagesStr = String(pages)
       const index = pagesStr.indexOf('.')
 
-      if (pages < 1) {
+      if (tasksTotal <= 0) {
         return 0
+      }
+
+      if (pages < 1) {
+        return 1
       }
 
       if (index) {
@@ -72,7 +76,7 @@ class TaskRepository {
     }
 
     if (!title?.length && date?.length) {
-      filteredTasks = tasks.filter(i => dateFormat(i.created_at) === date)
+      filteredTasks = tasks.filter(i => dateFormat(i.created_at) === dateFormat(i.created_at))
 
       return filteredTasks
     }
@@ -81,7 +85,7 @@ class TaskRepository {
       filteredTasks =
         tasks
           .filter((_el, i) => tasks[i].title.toLowerCase().includes(title))
-          .filter(i => dateFormat(i.created_at) === date)
+          .filter(i => dateFormat(i.created_at) === dateFormat(i.created_at))
 
       return filteredTasks
     }
@@ -119,7 +123,7 @@ class TaskRepository {
       id: updatedTask.id,
       title: updatedTask.title,
       description: updatedTask.description,
-      created_at: updatedTask.created_at
+      created_at: dateFormat(updatedTask.created_at)
     }
   }
 
