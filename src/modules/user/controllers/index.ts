@@ -39,7 +39,7 @@ class UserController {
     const { email } = req.body
 
     try {
-      const { user } = await userService.singIn(email)
+      const user = await userService.singIn(email)
 
       return res.json(user)
     } catch (error) {
