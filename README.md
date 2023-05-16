@@ -1,7 +1,7 @@
 # Seja bem vindo :smile:
 ## Api de gerenciamento de tarefas
 
-# Instruções para instalação do app:
+# Instruções para instalação:
 
 ### 1 - No seu terminal, já dentro do projeto, e digite o comando killall node, para garantir que não existe nenhum processo que esta utilizando a porta do servidor.
 ### 2 - Ainda na pasta /api-task-list, e digite o comando yarn, para instalar as dependências do projeto.
