@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import { taskService } from '../services'
 import { RequestData } from '../../../@types'
@@ -11,7 +11,6 @@ class TaskController {
 
     try {
       const tasks = await taskService.getAllTasksWithPagination(userId, page, pageSize)
-
       return res.json(tasks)
     } catch (error) {
       return res.status(500).json(error)
