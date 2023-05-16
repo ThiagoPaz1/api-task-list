@@ -19,7 +19,7 @@ class TaskRepository {
       tasksTotal: number,
       totalPages: number
     }> {
-    const skipSize = page <= 1 ? 0 : page * pageSize
+    const skipSize = page <= 1 ? 0 : (page - 1) * pageSize
     const tasksTotal = await tasksDB
       .ref(`users/${userId}/tasks`)
       .query()
